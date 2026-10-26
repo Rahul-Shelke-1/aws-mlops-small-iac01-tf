@@ -55,7 +55,10 @@ jobs:
         run: uv run ruff check .
 
       - name: Type Checking
-        run: uv run mypy src/
+        run: uv run mypy tests/
+
+      - name: Security Scan
+        run: uv run bandit -r tests/
 
       - name: Security Scan
         run: uv run bandit -c pyproject.toml -r src/
