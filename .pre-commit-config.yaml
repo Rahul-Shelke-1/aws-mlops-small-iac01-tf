@@ -1,0 +1,68 @@
+# To install hooks: pre-commit install
+# To run manually across all files: pre-commit run --all-files
+
+repos:
+  # ---------------------------------------------------------------------------
+  # General / Repository Hygiene
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+        args: ['--maxkb=10240'] # Warns on files > 10MB
+      - id: check-merge-conflict
+
+  # ---------------------------------------------------------------------------
+  # Secret Detection (Applies to both Python & Terraform)
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        # Note: Requires generating .secrets.baseline first (uv run detect-secrets scan > .secrets.baseline)
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package-lock\.json|uv\.lock|\.terraform/
+
+  # ---------------------------------------------------------------------------
+  # Python Hooks (Application Code)
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.2
+    hooks:
+      # Ruff Linter (Replaces flake8, isort)
+      - id: ruff
+        args: [--fix]
+      # Ruff Formatter (Replaces black)
+      - id: ruff-format
+
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.414
+    hooks:
+      # Static Type Checker for Python
+      - id: pyright
+
+  # ---------------------------------------------------------------------------
+  # OpenTofu Hooks (Infrastructure Code)
+  # ---------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      # Check OpenTofu formatting
+      - id: tofu-fmt
+        name: OpenTofu format check
+        entry: tofu fmt -check -recursive
+        language: system
+        pass_filenames: false
+        files: \.tf$
+
+      # Static security analysis
+      - id: tofu-checkov
+        name: Checkov security scan
+        entry: checkov --directory .
+        language: system
+        pass_filenames: false
+        files: \.tf$

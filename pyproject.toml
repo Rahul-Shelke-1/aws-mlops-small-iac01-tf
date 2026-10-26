@@ -4,4 +4,24 @@ version = "0.1.0"
 description = "An open-source AWS MLOps platform built with Terraform, Python, and automated testing. It provides a modular foundation for secure, scalable, and reproducible cloud infrastructure, with CI/CD workflows, infrastructure validation, documentation, and release automation."
 readme = "README.md"
 requires-python = ">=3.11, <3.14"
-dependencies = []
+dependencies = [
+    "pre-commit>=4.7.0",
+]
+
+[dependency-groups]
+dev = [
+    "detect-secrets>=1.5.0",
+    "mike>=2.2.0",
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.8.0",
+    "mkdocstrings>=1.0.8",
+    "mkdocstrings-python>=2.0.10",
+    "pytest>=9.1.1",
+]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-ra"
