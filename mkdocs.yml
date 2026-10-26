@@ -1,0 +1,110 @@
+site_name: Small MLOps Docs
+site_url: https://github.com/Rahul-Shelke-1/aws-mlops-small-iac01-tf/
+site_description: An AWS-based Small MLOps Platform demonstrating production-oriented machine learning infrastructure through modular Terraform IaC, automated testing, CI/CD, security, monitoring, and scalable ML service deployment.
+
+repo_url: https://github.com/Rahul-Shelke-1/aws-mlops-small-iac01-tf
+repo_name: Rahul-Shelke-1/aws-mlops-small-iac01-tf
+
+theme:
+  name: material
+  icon:
+    repo: fontawesome/brands/github
+    logo: fontawesome/solid/calculator
+  language: en
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+    - header.autohide
+    - announce.dismiss
+    - navigation.footer
+    - navigation.indexes
+    - navigation.tags
+    - navigation.top
+    - navigation.tracking
+    - navigation.instant
+    - search.highlight
+    - search.share
+    - search.suggest
+    - versioning
+
+  palette:
+    # Palette toggle for Light Mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: skyblue
+      accent: skyblue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for Dark Mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: green
+      accent: green
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+
+plugins:
+  - search
+  - mike:
+      alias_type: symlink
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy                # Changed to NumPy style
+            show_root_heading: true
+            show_source: true
+            heading_level: 2
+            merge_init_into_class: true          # Merges __init__ docs into the main class doc
+            show_if_no_docstring: false          # Keeps the API clean if a utility function lacks a docstring
+  - autorefs
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path: ["."]                            # Tells MkDocs to look in the root folder for files
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      default_lang: python
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Rahul-Shelke-1
+      name: GitHub
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/rahulshelke981/
+      name: LinkedIn
+    - icon: fontawesome/brands/kaggle
+      link: https://www.kaggle.com/rahulshelke98
+      name: Kaggle
+  generator: false
+
+copyright: Copyright &copy; 2026 Rahul Shelke
