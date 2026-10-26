@@ -10,4 +10,4 @@ def test_project_declares_python_version() -> None:
     with pyproject_path.open("rb") as file:
         config = tomllib.load(file)
 
-    assert config["project"]["requires-python"]
+    assert config["project"]["requires-python"]  # nosec B101
