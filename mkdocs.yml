@@ -53,6 +53,9 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
+  - CI/CD:
+    - Overview: cicd/index.md
+    - Python CI: cicd/python-ci.md
 
 plugins:
   - search
