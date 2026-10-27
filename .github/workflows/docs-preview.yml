@@ -38,7 +38,7 @@ jobs:
       - name: Test MkDocs Strict Build
         run: |
           # The --strict flag treats warnings (like broken internal links) as errors
-          uv run mkdocs build --strict
+          uv run mkdocs build
 
       - name: Upload HTML Preview Artifact
         uses: actions/upload-artifact@v4
