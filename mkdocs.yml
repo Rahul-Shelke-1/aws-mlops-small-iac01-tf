@@ -57,6 +57,7 @@ nav:
     - Overview: cicd/index.md
     - Python CI: cicd/python-ci.md
     - Documentation Deployment: cicd/documentation-deployment.md
+    - Release Workflow: cicd/release-workflow.md
 
 plugins:
   - search
