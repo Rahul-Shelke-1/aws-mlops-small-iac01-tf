@@ -52,7 +52,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy site --project-name small-mlops --branch=${{ github.head_ref }}
+          wranglerVersion: "4.136.3"
+          command: preview --worker-name ${{ secrets.CLOUDFLARE_WORKER_NAME }} --name pr-${{ github.event.pull_request.number }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment PR with Preview URL
