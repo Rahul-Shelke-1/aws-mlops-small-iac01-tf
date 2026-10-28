@@ -1,0 +1,26 @@
+
+name: release-please-sandbox
+
+on:
+  push:
+    branches:
+      - test/release-please-opentofu
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Release Please
+        uses: release-please-oss/release-please-action@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+          target-branch: test/release-please-opentofu
+          skip-github-release: true
