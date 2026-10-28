@@ -1,3 +1,4 @@
+
 name: release-please
 
 on:
@@ -14,9 +15,12 @@ permissions:
 jobs:
   release-please:
     runs-on: ubuntu-24.04
+
     steps:
-      - uses: release-please-oss/release-please-action@v5
+      - name: Run Release Please
+        uses: release-please-oss/release-please-action@v5
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: simple
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
