@@ -57,7 +57,7 @@ jobs:
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment PR with Preview URL
-        uses: mshick/add-pr-comment@v2
+        uses: mshick/add-pr-comment@v3.12.0
         with:
           message: |
             ### Documentation Preview Deployed!
