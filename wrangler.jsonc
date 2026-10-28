@@ -1,0 +1,9 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4/config-schema.json",
+  "name": "small-mlops",
+  "compatibility_date": "2026-10-28",
+  "assets": {
+    "directory": "./site"
+  },
+  "previews": {}
+}
