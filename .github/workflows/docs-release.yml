@@ -1,0 +1,65 @@
+name: Deploy Versioned Docs
+
+on:
+  push:
+    branches:
+      - main           # Triggers on typo fixes or minor updates merged into main
+  release:
+    types: [published] # Triggers when release-please creates a new version tag
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Required for mike to track gh-pages history
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Configure Git Authoring
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch Remote gh-pages Branch
+        run: git fetch origin gh-pages --depth=1 || true
+
+      - name: Determine Deployment Strategy
+        id: strategy
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            # Extract clean tag (e.g., v1.2.0)
+            VERSION="${{ github.event.release.tag_name }}"
+            echo "mode=release" >> $GITHUB_OUTPUT
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+          else
+            # For typo fixes on main, we overwrite the "latest" alias documentation
+            echo "mode=patch" >> $GITHUB_OUTPUT
+            echo "version=latest" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy with Mike
+        run: |
+          if [ "${{ steps.strategy.outputs.mode }}" = "release" ]; then
+            # Hard release: Deploy the tag, and point the 'latest' alias to it
+            uv run mike deploy --push --update-aliases ${{ steps.strategy.outputs.version }} latest
+          else
+            # Typo/Patch: Simply overwrite the existing 'latest' alias documentation folder
+            uv run mike deploy --push latest
+          fi
+
+          # Ensure the main landing page always redirects to latest
+          uv run mike set-default --push latest
