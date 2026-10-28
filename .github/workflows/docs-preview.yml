@@ -56,16 +56,6 @@ jobs:
           command: preview --config ./wrangler.jsonc --worker-name ${{ secrets.CLOUDFLARE_WORKER_NAME }} --name pr-${{ github.event.pull_request.number }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verify Preview URL
-        env:
-          PREVIEW_URL: ${{ steps.cloudflare_deploy.outputs.preview-url }}
-        run: |
-          if [ -z "$PREVIEW_URL" ]; then
-            echo "::error::Cloudflare Workers preview URL was not generated."
-            exit 1
-          fi
-          echo "Preview URL: $PREVIEW_URL"
-
       - name: Comment PR with Preview URL
         uses: mshick/add-pr-comment@v2
         with:
