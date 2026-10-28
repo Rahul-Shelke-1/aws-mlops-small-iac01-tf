@@ -66,4 +66,4 @@ jobs:
             | :--- | :--- |
             | **Cloudflare Workers Preview** | [View Preview](${{ steps.cloudflare_deploy.outputs.preview-url }}) |
 
-            _Built from commit ${{ github.event.pull_request.head.sha }}._
+            Built from commit ${{ github.event.pull_request.head.sha }}.
